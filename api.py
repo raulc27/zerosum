@@ -1,16 +1,16 @@
 from flask import Flask, request,jsonify
-from controllers import exchanges, tickers
+from controllers import mainprices, tickers
 
 api = Flask(__name__)
 
 
-@app.route('/exchangeresult')
+@api.route('/exchangeresult')
 def list():
-    result = exchanges.ShowExchanges.result_show()
+    result = mainprices.ShowExchanges.result_show()
     return {'exchanges_result':result},200
 
 
-@app.route('/ticker/<string:name>')
+@api.route('/ticker/<string:name>')
 def get_show(name):
     result = tickers.ShowTicker.find_by_name(name)
     if result:
