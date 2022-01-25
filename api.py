@@ -14,7 +14,7 @@ def list():
 def get_show(name):
     result = tickers.ShowTicker.find_by_name(name)
     if result:
-        return result.json()
+        return result.json(), 200
     return {'message':'not found'}, 404
 
 if __name__ == '__main__':
