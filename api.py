@@ -6,7 +6,7 @@ api = Flask(__name__)
 
 @api.route('/exchangeresult')
 def list():
-    result = mainprices.ShowExchanges.result_show()
+    result = mainprices.ShowMarket.result_show()
     return {'exchanges_result':result},200
 
 
