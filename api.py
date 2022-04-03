@@ -4,10 +4,12 @@ from controllers import mainprices
 api = Flask(__name__)
 
 
-@api.route('/exchangeresult')
+@api.route('/exchangeresult/')
 def list():
     result = mainprices.ShowMarket.result_show()
-    return {'exchanges_result':result},200
+    if result:
+        return result.json(), 200
+    return {'Error':'no results'},404
 
 
 @api.route('/ticker/<string:name>')
@@ -16,6 +18,14 @@ def get_show(name):
     if result:
         return result.json(), 200
     return {'message':'not found'}, 404
+
+@api.route('/quote/<string:symbol>')
+def display_quote(symbol):
+ #   symbol = request.args.get('symbol', default="AAPL")
+    result = mainprices.ShowMarket.ticker(symbol)
+    if result:
+        return result.json(), 200
+    return {"Error":"Could not retrieve info"}, 404
 
 if __name__ == '__main__':
     api.run(port=5000, debug=True)

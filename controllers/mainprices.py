@@ -10,3 +10,7 @@ class ShowMarket:
     def show_ticker(cls):
         price = yf.download(cls)
         return price.head(-1)
+    
+    def quote(cls):
+        price = yf.download(cls)
+        return price.info
