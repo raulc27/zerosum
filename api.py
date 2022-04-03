@@ -1,23 +1,21 @@
 from flask import Flask, request,jsonify
+from controllers import mainprices
 
 api = Flask(__name__)
 
 
-@app.route('/shows')
+@api.route('/exchangeresult')
 def list():
-    result = show.ShowModel.list_shows()
-    return {'showlist':result},200
+    result = mainprices.ShowMarket.result_show()
+    return {'exchanges_result':result},200
 
-@app.route('/show/<int:int>/update', methods=['PUT'])
-def update_show(id):
-    request_data = request.get_json()
-    result = show.ShowModel.find_by_id(id)
+
+@api.route('/ticker/<string:name>')
+def get_show(name):
+    result = mainprices.ShowMarket.show_ticker(name)
     if result:
-        result.name = request_data['name']
-        result.update()
-        return {'message':'Série atualizada com sucesso'}, 200
-    else:
-        return {'message':'Série não encontrada'}, 404
+        return result.json(), 200
+    return {'message':'not found'}, 404
 
 if __name__ == '__main__':
     api.run(port=5000, debug=True)
