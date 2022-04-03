@@ -1,5 +1,5 @@
 from flask import Flask, request,jsonify
-from controllers import mainprices, tickers
+from controllers import mainprices
 
 api = Flask(__name__)
 
@@ -12,7 +12,7 @@ def list():
 
 @api.route('/ticker/<string:name>')
 def get_show(name):
-    result = tickers.ShowTicker.find_by_name(name)
+    result = mainprices.ShowMarket.show_ticker(name)
     if result:
         return result.json(), 200
     return {'message':'not found'}, 404
