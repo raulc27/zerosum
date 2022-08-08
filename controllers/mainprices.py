@@ -8,5 +8,17 @@ class ShowMarket:
      return timeprices.head(-1)
 
     def show_ticker(cls):
+        quote = yf.Ticker(cls)
+        return {
+        "Name": quote.info['shortName'],
+        "Symbol": quote.info['symbol'],
+        "Price": quote.info['currentPrice'],
+        "Profit": quote.info['profitMargins'],
+        "Volume": quote.info['volume'],
+        "AverageVolume": quote.info['averageVolume'],
+        "MarketCap": quote.info['marketCap'],
+        }
+    
+    def quote(cls):
         price = yf.download(cls)
-        return price.head(-1)
+        return price.info
