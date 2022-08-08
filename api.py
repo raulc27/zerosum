@@ -11,12 +11,11 @@ def list():
         return result.json(), 200
     return {'Error':'no results'},404
 
-
 @api.route('/ticker/<string:name>')
 def get_show(name):
     result = mainprices.ShowMarket.show_ticker(name)
     if result:
-        return result.json(), 200
+        return result, 200
     return {'message':'not found'}, 404
 
 @api.route('/quote/<string:symbol>')
