@@ -30,7 +30,7 @@ def display_quote(symbol):
  #   symbol = request.args.get('symbol', default="AAPL")
     result = mainprices.ShowMarket.ticker(symbol)
     if result:
-        return result.json(), 200
+        return result, 200
     return {"Error":"Could not retrieve info"}, 404
 
 if __name__ == '__main__':
