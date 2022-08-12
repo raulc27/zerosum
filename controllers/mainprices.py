@@ -10,7 +10,9 @@ class ShowMarket:
 
     def show_ticker(cls):
         quote = yf.Ticker(cls)
-        return {
+        return quote.info.to_json()
+    """  
+    return {
         "Name": quote.info['shortName'],
         "Symbol": quote.info['symbol'],
         "Price": quote.info['currentPrice'],
@@ -18,8 +20,10 @@ class ShowMarket:
         "Volume": quote.info['volume'],
         "AverageVolume": quote.info['averageVolume'],
         "MarketCap": quote.info['marketCap'],
-        }
-    
+        } 
+    """
+        
+
     def fundamentals_ticker(cls):
         quote = yf.Ticker(cls)
         return quote.quarterly_financials.to_json()
