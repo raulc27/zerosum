@@ -19,6 +19,10 @@ class ShowMarket:
         "MarketCap": quote.info['marketCap'],
         }
     
+    def fundamentals_ticker(cls):
+        quote = yf.Ticker(cls).quarterly_financials
+        return quote
+
     def quote(cls):
         price = yf.download(cls)
         return price.info
