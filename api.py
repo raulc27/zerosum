@@ -22,7 +22,7 @@ def get_show(name):
 def get_fundamentals_show(name):
     result = mainprices.ShowMarket.fundamentals_ticker(name)
     if result:
-        return result.json(), 200
+        return result, 200
     return {'message':'not found'}, 404
 
 @api.route('/quote/<string:symbol>')
