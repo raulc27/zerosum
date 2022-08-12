@@ -20,8 +20,8 @@ class ShowMarket:
         }
     
     def fundamentals_ticker(cls):
-        quote = yf.Ticker(cls).quarterly_financials
-        return quote
+        quote = yf.Ticker(cls)
+        return quote.quarterly_financials
 
     def quote(cls):
         price = yf.download(cls)
