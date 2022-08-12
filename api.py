@@ -1,4 +1,4 @@
-from flask import Flask, request,jsonify
+from flask import Flask, request, jsonify
 from controllers import mainprices
 
 api = Flask(__name__)

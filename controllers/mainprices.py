@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+import json
 
 class ShowMarket:
 
@@ -21,7 +22,7 @@ class ShowMarket:
     
     def fundamentals_ticker(cls):
         quote = yf.Ticker(cls)
-        return quote.quarterly_financials
+        return json.dumps(quote)
 
     def quote(cls):
         price = yf.download(cls)
