@@ -22,7 +22,7 @@ class ShowMarket:
     
     def fundamentals_ticker(cls):
         quote = yf.Ticker(cls)
-        return json.dumps(quote)
+        return quote.quarterly_financials.to_json()
 
     def quote(cls):
         price = yf.download(cls)
