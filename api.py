@@ -19,7 +19,7 @@ def get_show(name):
     return {'message':'not found'}, 404
 
 @api.route('/ticker/fundamentals/<string:name>')
-def get_show(name):
+def get_fundamentals_show(name):
     result = mainprices.ShowMarket.fundamentals_ticker(name)
     if result:
         return result.json(), 200
