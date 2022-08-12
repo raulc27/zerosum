@@ -18,6 +18,13 @@ def get_show(name):
         return result, 200
     return {'message':'not found'}, 404
 
+@api.route('/ticker/fundamentals/<string:name>')
+def get_show(name):
+    result = mainprices.ShowMarket.fundamentals_ticker(name)
+    if result:
+        return result.json(), 200
+    return {'message':'not found'}, 404
+
 @api.route('/quote/<string:symbol>')
 def display_quote(symbol):
  #   symbol = request.args.get('symbol', default="AAPL")
