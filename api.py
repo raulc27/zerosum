@@ -1,4 +1,4 @@
-from flask import Flask, request,jsonify
+from flask import Flask, request, json
 from controllers import mainprices
 
 api = Flask(__name__)
@@ -22,7 +22,7 @@ def get_show(name):
 def get_fundamentals_show(name):
     result = mainprices.ShowMarket.fundamentals_ticker(name)
     if result:
-        return result, 200
+        return result.json(), 200
     return {'message':'not found'}, 404
 
 @api.route('/quote/<string:symbol>')
