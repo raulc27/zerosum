@@ -10,7 +10,7 @@ class ShowMarket:
 
     def show_ticker(cls):
         quote = yf.Ticker(cls)
-        return quote.info.to_json()
+        return quote.info
     """  
     return {
         "Name": quote.info['shortName'],
