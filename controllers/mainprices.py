@@ -28,6 +28,10 @@ class ShowMarket:
         quote = yf.Ticker(cls)
         return quote.quarterly_financials.to_json()
 
+    def cashflow_ticker(cls):
+        quote = yf.Ticker(cls)
+        return quote.quarterly_cashflow.to_json()
+
     def quote(cls):
         price = yf.download(cls)
         return price.info
