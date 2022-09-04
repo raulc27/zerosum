@@ -3,13 +3,13 @@ from controllers import mainprices
 
 api = Flask(__name__)
 
-
-@api.route('/exchangeresult/')
-def list():
-    result = mainprices.ShowMarket.result_show()
-    if result:
-        return result.json(), 200
-    return {'Error':'no results'},404
+@api.route('/')
+def get_generic():
+    return {
+        '/ticker/fundamentals/TICKER.sa':'Fundamentals (quarterly)',
+        '/ticker/cashflow/TICKER.sa':'Cashflow (quarterly)',
+        '/ticker/TICKER.sa':'Basic info about TICKSER.sa',
+    }, 200
 
 @api.route('/ticker/<string:name>')
 def get_show(name):
@@ -25,13 +25,12 @@ def get_fundamentals_show(name):
         return result, 200
     return {'message':'not found'}, 404
 
-@api.route('/quote/<string:symbol>')
-def display_quote(symbol):
- #   symbol = request.args.get('symbol', default="AAPL")
-    result = mainprices.ShowMarket.ticker(symbol)
+@api.route('/ticker/cashflow/<string:name>')
+def get_cashflow_show(name):
+    result = mainprices.ShowMarket.cashflow_ticker(name)
     if result:
         return result, 200
-    return {"Error":"Could not retrieve info"}, 404
+    return {'message':'not found'}, 404
 
 if __name__ == '__main__':
     api.run(port=5000, debug=True)
