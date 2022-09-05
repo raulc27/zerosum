@@ -23,10 +23,10 @@ jobs:
     - name: Docker Build and Push
       uses: docker/build-push-action@v2.7.0
       with:
-        context: ./src
-        file: ./src/Dockerfile
+        context: ../
+        file: ../Dockerfile
         push: true
         tags: |
-          raulc27/rotten-zerosum:latest
-          raulc27/rotten-zerosum:${{ github.run_number }}
+          raulc27/zerosum:latest
+          raulc27/zerosum:${{ github.run_number }}
             
