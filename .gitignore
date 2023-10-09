@@ -4,3 +4,4 @@ controllers/__pycache__/
 pyvenv.cfg
 *.pyc
 app.yaml
+.venv/
