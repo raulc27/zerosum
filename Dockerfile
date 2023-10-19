@@ -1,11 +1,43 @@
-FROM python:3.8-slim-buster
-WORKDIR /zerosum
-#ENV FLASK_APP api.py
-#ENV FLASK_RUN_HOST 0.0.0.0
-#RUN apk add --no-cache gcc musl-dev linux-headers
-COPY requirements.txt requirements.txt
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+# using ubuntu LTS version
+FROM ubuntu:20.04 AS builder-image
+
+# avoid stuck build due to user prompt
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install --no-install-recommends -y python3.9 python3.9-dev python3.9-venv python3-pip python3-wheel build-essential && \
+	apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# create and activate virtual environment
+# using final folder name to avoid path issues with packages
+RUN python3.9 -m venv /home/zerosum/venv
+ENV PATH="/home/zerosum/venv/bin:$PATH"
+
+# install requirements
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir wheel
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+FROM ubuntu:20.04 AS runner-image
+RUN apt-get update && apt-get install --no-install-recommends -y python3.9 python3-venv && \
+	apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home zerosum
+COPY --from=builder-image /home/zerosum/venv /home/zerosum/venv
+
+USER zerosum
+RUN mkdir /home/zerosum/code
+WORKDIR /home/zerosum/code
 COPY . .
-ENTRYPOINT ["python"]
-#CMD ["flask","run"]
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+
+EXPOSE 5000
+
+# make sure all messages always reach console
+ENV PYTHONUNBUFFERED=1
+
+# activate virtual environment
+ENV VIRTUAL_ENV=/home/zerosum/venv
+ENV PATH="/home/zerosum/venv/bin:$PATH"
+
+# /dev/shm is mapped to shared memory and should be used for gunicorn heartbeat
+# this will improve performance and avoid random freezes
+CMD ["gunicorn","-b", "0.0.0.0:5000", "-w", "4", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "api:api"]
