@@ -1,0 +1,7 @@
+#GET
+# /ticker/TICKER.sa
+# /ticker/cashflow/TICKER.sa
+# /ticker/fundamentals/TICKER.sa
+
+GET http://localhost:5000/ticker/PETR3.sa
+
