@@ -19,6 +19,6 @@ six==1.16.0
 typing_extensions==4.0.1
 urllib3==1.26.8
 Werkzeug==2.0.2
-yfinance==0.1.69
+yfinance==0.2.37
 zipp==3.7.
 gevent==23.9.1
