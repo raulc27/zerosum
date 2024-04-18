@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from controllers import mainprices
 
 api = Flask(__name__)
-CORS(api)
+cors=CORS(api)
+api.config['CORS_HEADERS'] = 'Content-Type'
 @api.route('/')
 @cors_origin()
 def get_generic():
