@@ -16,7 +16,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_PWD }}
-      run: docker build . --file Dockerfile --tag zerosum:$(date +%s)
+     # run: docker build . --file Dockerfile --tag zerosum:$(date +%s)
     - name: ZeroSum Docker Build and Push
       uses: docker/build-push-action@v2.7.0
       with:
