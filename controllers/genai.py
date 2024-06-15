@@ -54,7 +54,7 @@ class Genai:
         })
         
 
-    def ticket_resume(cls, model=model):
+    def ticker_resume(cls, model=model):
         #timeprices = yf.download("BOVA11.SA SPY")
         _prompt = f"Make a resume about {cls} and its prices in brazilian portugues, using three paragraphs, from the last week until now, and main news related"
     

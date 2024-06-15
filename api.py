@@ -48,10 +48,10 @@ def market_resume_show():
         return result, 200
     return {'message':'not found'}, 404
 
-@api.route('/genai/ticket_market/<string:name>')
+@api.route('/genai/resume_ticker/<string:name>')
 @cross_origin()
 def ticket_resume_show(name):
-    result = genai.Genai.ticket_resume(name)
+    result = genai.Genai.ticker_resume(name)
     if result:
         return result, 200
     return {'message':'not found'}, 404
