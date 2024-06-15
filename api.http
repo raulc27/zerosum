@@ -5,3 +5,5 @@
 
 GET http://localhost:5000/ticker/PETR3.sa
 
+GET http://localhost:5000/genai/resume_market
+
