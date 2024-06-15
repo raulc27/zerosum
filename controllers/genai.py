@@ -1,5 +1,6 @@
 import os
 import marko
+from flask import jsonify
 import yfinance as yf
 import google.generativeai as genai
 from datetime import date, timedelta
@@ -47,4 +48,6 @@ class Genai:
         and main news related."""
     
         response = model.generate_content(_prompt)
-        return response
+        return jsonify({
+            "response": marko.convert(response.text)
+        })

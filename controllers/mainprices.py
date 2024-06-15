@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+from flask import jsonify
 import json
 
 class ShowMarket:
