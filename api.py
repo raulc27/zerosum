@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, g, render_template
 from flask_cors import CORS, cross_origin
-from controllers import mainprices
+from controllers import mainprices, genai
 
 api = Flask(__name__)
 cors=CORS(api)
 api.config['CORS_HEADERS'] = 'Content-Type'
+
 @api.route('/')
 @cross_origin()
 def get_generic():
@@ -34,6 +35,15 @@ def get_fundamentals_show(name):
 @cross_origin()
 def get_cashflow_show(name):
     result = mainprices.ShowMarket.cashflow_ticker(name)
+    if result:
+        return result, 200
+    return {'message':'not found'}, 404
+
+
+@api.route('/genai/resume_market')
+@cross_origin()
+def market_resume_show():
+    result = genai.Genai.market_resume()
     if result:
         return result, 200
     return {'message':'not found'}, 404
