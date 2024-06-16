@@ -8,6 +8,9 @@ from datetime import date, timedelta
 
 
 class Genai:
+    
+    today = date.today()
+    lastweek = today - timedelta(days=7)
 
     genai.configure(api_key=os.getenv("GENAI_API_KEY"))
 
@@ -41,12 +44,10 @@ class Genai:
                             generation_config=config,
                             safety_settings=safety_settings)
 
-    def market_resume(model=model):
+    def market_resume(today=today, lastweek=lastweek, model=model):
         #timeprices = yf.download("BOVA11.SA SPY")
-        _prompt = """Make a resume in brazilian portuguese, using three paragraphs, 
-        from yesterday until now, about brazilian financial market, range B3 exchange indexes
-        points [Indice Bovespa, Indice Brasil 100 (IBrX 100), Indice Brasil 50 (IBrX 50), Indice Brasil Amplo (IBrA B3)]
-        and main news related."""
+        _prompt = f"""Make a resume in brazilian portuguese, using three paragraphs, 
+        from {lastweek} until {today}, about brazilian financial market and main news related, show links to the sources."""
     
         response = model.generate_content(_prompt)
         return jsonify({
@@ -54,9 +55,9 @@ class Genai:
         })
         
 
-    def ticker_resume(cls, model=model):
+    def ticker_resume(cls, today=today, lastweek=lastweek, model=model):
         #timeprices = yf.download("BOVA11.SA SPY")
-        _prompt = f"Make a resume about {cls} and its prices in brazilian portugues, using three paragraphs, from the last week until now, and main news related"
+        _prompt = f"Make a resume about {cls} related news in brazilian portuguese, using three paragraphs, from {lastweek} until {today}, show links to the sources"
     
         response = model.generate_content(_prompt)
         return jsonify({
