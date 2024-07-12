@@ -34,6 +34,7 @@ numpy==1.26.4
 packaging==24.0
 pandas==2.2.2
 peewee==3.17.5
+plotly==5.22.0
 proto-plus==1.23.0
 protobuf==4.25.3
 pyasn1==0.6.0
@@ -42,11 +43,13 @@ pydantic==2.7.3
 pydantic-core==2.18.4
 pyparsing==3.1.2
 python-dateutil==2.8.2
+python-dotenv==1.0.1
 pytz==2022.5
 requests==2.31.0
 rsa==4.9
 six==1.16.0
 soupsieve==2.5
+tenacity==8.5.0
 tqdm==4.66.4
 typing-extensions==4.12.1
 tzdata==2024.1

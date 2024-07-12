@@ -4,6 +4,8 @@ from flask import jsonify
 import yfinance as yf
 import google.generativeai as genai
 from datetime import date, timedelta
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 
 
@@ -56,8 +58,38 @@ class Genai:
         
 
     def ticker_resume(cls, today=today, lastweek=lastweek, model=model):
-        #timeprices = yf.download("BOVA11.SA SPY")
-        _prompt = f"Make a resume about {cls} related news in brazilian portuguese, using three paragraphs, from {lastweek} until {today}, show links to the sources"
+        timeprices = yf.download(cls, start=lastweek, end=today)
+        quote = yf.Ticker(cls)
+        priceresume = timeprices.head(-1)
+        
+        fig = make_subplots(rows=1, cols=1)
+        fig.add_trace(go.Candlestick(name=f'Variação da cotação de {cls}', 
+                                    x=timeprices.index, 
+                                    open=timeprices['Open'],
+                                    high=timeprices['High'],
+                                    low=timeprices['Low'],
+                                    close=timeprices['Close'],
+                                    showlegend=True),
+                                    row=1,
+                                    col=1)
+        fig.update_yaxes(title_text="<b>Preço {cls} (R$)", row=1, col=1)
+        fig.update_layout(xaxis_rangeslider_visible=False, width=1000, height=500)
+        graph = fig.show()
+
+        image = [
+            {
+                "mime_type": "image/png",
+                "content": graph
+            }            
+        ]
+
+        
+        _prompt = f"""You are an economist with market knowledge,
+        make a resume about {cls}, show its {priceresume} and comment about it (the prices diferences, did the prices fall ?
+        are they in an uptrend or downtrend, from {today} to {lastweek} ?),
+        show {quote.quarterly_financials.to_html()} and comment about the diferences between dates, convert the prices to money format,
+        in brazilian portuguese, show {image} as image at the begining of the resume
+        """
     
         response = model.generate_content(_prompt)
         return jsonify({
