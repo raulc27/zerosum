@@ -5,7 +5,10 @@ import yfinance as yf
 import google.generativeai as genai
 from datetime import date, timedelta
 import plotly.graph_objects as go
+import plotly.express as px
 from plotly.subplots import make_subplots
+import io
+import urllib, base64
 
 
 
@@ -45,6 +48,59 @@ class Genai:
     model = genai.GenerativeModel(model_name="gemini-1.0-pro-001",
                             generation_config=config,
                             safety_settings=safety_settings)
+    
+    def create_candlestick_chart(timeprices, cls):
+        """Creates a candlestick chart and returns it as a base64-encoded string.
+
+        Args:
+            timeprices (pandas.DataFrame): DataFrame containing time-series data for the candlestick chart.
+            cls (str): Class name or identifier for the chart.
+
+        Returns:
+            str: Base64-encoded image data of the candlestick chart.
+        """
+
+        fig = make_subplots(rows=1, cols=1)
+
+        fig.add_trace(go.Candlestick(name='Variação da cotação de {cls}', 
+                                    x=timeprices.index, 
+                                    open=timeprices['Open'],
+                                    high=timeprices['High'],
+                                    low=timeprices['Low'],
+                                    close=timeprices['Close'],
+                                    showlegend=True),
+                                    row=1,
+                                    col=1)
+
+
+        # fig = go.candlestick(
+        #     timeprices,
+        #     x=timeprices.index,
+        #     open="Open",
+        #     high="High",
+        #     low="Low",
+        #     close="Close",
+        #     title=f'Variação da cotação de {cls}',
+        #     showlegend=True
+        # )
+
+        fig.update_layout(
+            yaxis_title=f'<b>Preço {cls} (R$)</b>',
+            xaxis_rangeslider_visible=False,
+            width=1000,
+            height=500
+        )
+
+        # Capture image data and encode as base64
+        img_data = io.BytesIO()
+        fig.write_image(img_data, format="png")
+        img_data.seek(0)  # Rewind to beginning
+        base64_encoded_img = base64.b64encode(img_data.read()).decode("utf-8")
+
+        # Construct the URI
+        uri = f'data:image/png;base64,{urllib.parse.quote(base64_encoded_img)}'
+
+        return uri
 
     def market_resume(today=today, lastweek=lastweek, model=model):
         #timeprices = yf.download("BOVA11.SA SPY")
@@ -62,36 +118,29 @@ class Genai:
         quote = yf.Ticker(cls)
         priceresume = timeprices.head(-1)
         
-        fig = make_subplots(rows=1, cols=1)
-        fig.add_trace(go.Candlestick(name=f'Variação da cotação de {cls}', 
-                                    x=timeprices.index, 
-                                    open=timeprices['Open'],
-                                    high=timeprices['High'],
-                                    low=timeprices['Low'],
-                                    close=timeprices['Close'],
-                                    showlegend=True),
-                                    row=1,
-                                    col=1)
-        fig.update_yaxes(title_text="<b>Preço {cls} (R$)", row=1, col=1)
-        fig.update_layout(xaxis_rangeslider_visible=False, width=1000, height=500)
-        graph = fig.show()
-
+        htmlGraph = Genai.create_candlestick_chart(timeprices, cls)
+        
         image = [
             {
                 "mime_type": "image/png",
-                "content": graph
-            }            
+                "data": htmlGraph
+            }
         ]
+        # show {htmlGraph} at the begining of the resume inside an IMG html tag
+        print(htmlGraph)
 
         
         _prompt = f"""You are an economist with market knowledge,
         make a resume about {cls}, show its {priceresume} and comment about it (the prices diferences, did the prices fall ?
         are they in an uptrend or downtrend, from {today} to {lastweek} ?),
         show {quote.quarterly_financials.to_html()} and comment about the diferences between dates, convert the prices to money format,
-        in brazilian portuguese, show {image} as image at the begining of the resume
+        in brazilian portuguese.
         """
     
-        response = model.generate_content(_prompt)
+        response = model.generate_content(
+            _prompt
+            )
         return jsonify({
-            "response": marko.convert(response.text)
+            "response": marko.convert(response.text),
+            "graph": htmlGraph
         })
