@@ -53,7 +53,7 @@ class Genai:
         """Creates a candlestick chart and returns it as a base64-encoded string.
 
         Args:
-            timeprices (pandas.DataFrame): DataFrame containing time-series data for the candlestick chart.
+            timeprices: yf.download... with price time series data.
             cls (str): Class name or identifier for the chart.
 
         Returns:
