@@ -119,17 +119,7 @@ class Genai:
         priceresume = timeprices.head(-1)
         
         htmlGraph = Genai.create_candlestick_chart(timeprices, cls)
-        
-        image = [
-            {
-                "mime_type": "image/png",
-                "data": htmlGraph
-            }
-        ]
-        # show {htmlGraph} at the begining of the resume inside an IMG html tag
-        print(htmlGraph)
-
-        
+                
         _prompt = f"""You are an economist with market knowledge,
         make a resume about {cls}, show its {priceresume} and comment about it (the prices diferences, did the prices fall ?
         are they in an uptrend or downtrend, from {today} to {lastweek} ?),
