@@ -13,6 +13,8 @@ def get_generic():
         '/ticker/fundamentals/TICKER.sa':'Fundamentals (quarterly)',
         '/ticker/cashflow/TICKER.sa':'Cashflow (quarterly)',
         '/ticker/TICKER.sa':'Basic info about TICKSER.sa',
+        '/genai/resume_market':'Resume market',
+        '/genai/resume_ticker/TICKER.sa':'Basic info about TICKSER.sa',
     }, 200
 
 @api.route('/ticker/<string:name>')
