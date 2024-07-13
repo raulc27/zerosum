@@ -62,7 +62,7 @@ class Genai:
 
         fig = make_subplots(rows=1, cols=1)
 
-        fig.add_trace(go.Candlestick(name='Variação da cotação de {cls}', 
+        fig.add_trace(go.Candlestick(name=f'Variação da cotação de {cls}', 
                                     x=timeprices.index, 
                                     open=timeprices['Open'],
                                     high=timeprices['High'],
@@ -104,8 +104,9 @@ class Genai:
 
     def market_resume(today=today, lastweek=lastweek, model=model):
         #timeprices = yf.download("BOVA11.SA SPY")
-        _prompt = f"""Make a resume in brazilian portuguese, using three paragraphs, 
-        from {lastweek} until {today}, about brazilian financial market and main news related, show links to the sources."""
+        _prompt = f"""You are an economist with brazilian market knowledge, make a resume in brazilian portuguese, using at least three paragraphs, 
+        from {lastweek} until {today}, explaining about the brazilian financial market and main news related, make the resume in brazilian portuguese.
+        """
     
         response = model.generate_content(_prompt)
         return jsonify({
@@ -120,11 +121,11 @@ class Genai:
         
         htmlGraph = Genai.create_candlestick_chart(timeprices, cls)
                 
-        _prompt = f"""You are an economist with market knowledge,
-        make a resume about {cls}, show its {priceresume} and comment about it (the prices diferences, did the prices fall ?
+        _prompt = f"""You are an economist with brazilian market knowledge,
+        make a resume about {cls}, show its {priceresume} in a table and comment about that prices (in money format, how did the prices perform ?
         are they in an uptrend or downtrend, from {today} to {lastweek} ?),
-        show {quote.quarterly_financials.to_html()} and comment about the diferences between dates, convert the prices to money format,
-        in brazilian portuguese.
+        show {quote.quarterly_financials.to_html()} in a table and comment about the timeseries, convert the prices to money format,
+        make the resume in brazilian portuguese.
         """
     
         response = model.generate_content(
