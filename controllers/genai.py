@@ -45,7 +45,7 @@ class Genai:
         }
     ]
 
-    model = genai.GenerativeModel(model_name="gemini-1.0-pro-001",
+    model = genai.GenerativeModel(model_name="gemini-2.5-pro",
                             generation_config=config,
                             safety_settings=safety_settings)
     
