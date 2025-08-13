@@ -2,7 +2,9 @@ import os
 import marko
 from flask import jsonify
 import yfinance as yf
-import google.generativeai as genai
+#import google.generativeai as genai
+from google import genai
+from google.genai import types
 from datetime import date, timedelta
 import plotly.graph_objects as go
 import plotly.express as px
@@ -47,7 +49,8 @@ class Genai:
 
     model = genai.GenerativeModel(model_name="gemini-2.5-pro",
                             generation_config=config,
-                            safety_settings=safety_settings)
+                            #safety_settings=safety_settings
+                            )
     
     def create_candlestick_chart(timeprices, cls):
         """Creates a candlestick chart and returns it as a base64-encoded string.
@@ -110,7 +113,7 @@ class Genai:
     
         response = model.generate_content(_prompt)
         return jsonify({
-            "response": marko.convert(response.text)
+            "response": marko.convert(response)
         })
         
 
