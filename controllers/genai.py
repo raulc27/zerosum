@@ -3,6 +3,7 @@ import marko
 from flask import jsonify
 import yfinance as yf
 import google.generativeai as genai
+from google.generativeai import types
 from datetime import date, timedelta
 import plotly.graph_objects as go
 import plotly.express as px
