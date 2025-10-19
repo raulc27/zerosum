@@ -1,8 +1,11 @@
 from flask import jsonify
+from brapi import AsyncBrapi
+from dotenv import load_dotenv
 import os
 import requests
 import json
 
+load_dotenv()
 BRAPI_TOKEN = os.getenv("BRAPI_TOKEN");
 BASE_URL = "https://brapi.dev/api/quote/";
 params={?token=&range=5d&interval=1d&fundamental=true&dividends=true&modules=summaryProfile,balanceSheetHistory,financialData}
@@ -19,6 +22,21 @@ class Brapi:
             return jsonify(response.json())
         else:
             return jsonify({"error": "Failed to fetch data from Brapi"}), response.status_code
+
+    
+    @staticmethod
+    def get_async_stock_data(ticker):
+        async_brapi = AsyncBrapi(token=BRAPI_TOKEN)
+        data = async_brapi.get_quote(
+            ticker, 
+            range="5d", 
+            interval="1d", 
+            fundamental=True, 
+            dividends=True, 
+            modules=["summaryProfile", 
+            "balanceSheetHistory", 
+            "financialData"])
+        return jsonify(data)
   
 
     
