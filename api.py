@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, Response, g, render_template
 from flask_cors import CORS, cross_origin
-from controllers import mainprices, genai
+from controllers import mainprices, genai, brapi
 
 api = Flask(__name__)
 cors=CORS(api)
@@ -54,6 +54,14 @@ def market_resume_show():
 @cross_origin()
 def ticket_resume_show(name):
     result = genai.Genai.ticker_resume(name)
+    if result:
+        return result, 200
+    return {'message':'not found'}, 404
+
+@api.route('/brapi/quote/<string:name>')
+@cross_origin()
+def brapi_quote_show(name):
+    result = brapi.Brapi.get_quote(name)
     if result:
         return result, 200
     return {'message':'not found'}, 404
