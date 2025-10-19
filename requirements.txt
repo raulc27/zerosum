@@ -62,3 +62,4 @@ yfinance==0.2.37
 zipp==3.7.0
 zope.event==5.0
 zope.interface==6.4.post2
+brapi==1.0.0
