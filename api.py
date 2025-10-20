@@ -69,7 +69,7 @@ def brapi_quote_show(name):
 @api.route('/brapi/async_quote/<string:name>')
 @cross_origin()
 def brapi_async_quote_show(name):
-    result = await brapi.Brapi.get_async_stock_data(name)
+    result = brapi.Brapi.get_async_stock_data(name)
     if result:
         return result, 200
     return {'message':'not found'}, 404

@@ -2,6 +2,7 @@ from flask import jsonify
 from brapi import AsyncBrapi
 from dotenv import load_dotenv
 import os
+import asyncio
 import requests
 import json
 
@@ -37,7 +38,7 @@ class Brapi:
     
     @staticmethod
     def get_async_stock_data(ticker):
-        async_brapi = AsyncBrapi(api_key=BRAPI_TOKEN)
+        async with AsyncBrapi(api_key=BRAPI_TOKEN) as async_brapi:
         # data = async_brapi.get_quote(
         #     ticker, 
         #     range="5d", 
@@ -47,8 +48,8 @@ class Brapi:
         #     modules=["summaryProfile", 
         #     "balanceSheetHistory", 
         #     "financialData"])
-        data = async_brapi.quote.retrieve(tickers=ticker)
-        return jsonify(data)
+            data = async_brapi.quote.retrieve(tickers=ticker)
+            return jsonify(data)
   
 
     
