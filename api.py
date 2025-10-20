@@ -61,7 +61,7 @@ def ticket_resume_show(name):
 @api.route('/brapi/quote/<string:name>')
 @cross_origin()
 def brapi_quote_show(name):
-    result = brapi.Brapi.get_quote(name)
+    result = brapi.Brapi.get_stock_data(name)
     if result:
         return result, 200
     return {'message':'not found'}, 404
@@ -69,7 +69,7 @@ def brapi_quote_show(name):
 @api.route('/brapi/async_quote/<string:name>')
 @cross_origin()
 def brapi_async_quote_show(name):
-    result = brapi.Brapi.get_async_quote(name)
+    result = brapi.Brapi.get_async_stock_data(name)
     if result:
         return result, 200
     return {'message':'not found'}, 404
