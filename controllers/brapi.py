@@ -37,7 +37,7 @@ class Brapi:
 
     
     @staticmethod
-    def get_async_stock_data(ticker):
+    async def get_async_stock_data(ticker):
         async with AsyncBrapi(api_key=BRAPI_TOKEN) as async_brapi:
         # data = async_brapi.get_quote(
         #     ticker, 
