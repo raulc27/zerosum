@@ -9,6 +9,17 @@ load_dotenv()
 BRAPI_TOKEN = os.getenv("BRAPI_TOKEN");
 BASE_URL = "https://brapi.dev/api/quote/";
 
+params = {
+    "range": "5d",
+    "interval": "1d",
+    "fundamental": "true",
+    "dividends": "true",
+    "modules": [
+        "summaryProfile",
+        "balanceSheetHistory",
+        "financialData"
+    ]
+}
 
 class Brapi:
     @staticmethod
@@ -27,15 +38,16 @@ class Brapi:
     @staticmethod
     def get_async_stock_data(ticker):
         async_brapi = AsyncBrapi(token=BRAPI_TOKEN)
-        data = async_brapi.get_quote(
-            ticker, 
-            range="5d", 
-            interval="1d", 
-            fundamental=True, 
-            dividends=True, 
-            modules=["summaryProfile", 
-            "balanceSheetHistory", 
-            "financialData"])
+        # data = async_brapi.get_quote(
+        #     ticker, 
+        #     range="5d", 
+        #     interval="1d", 
+        #     fundamental=True, 
+        #     dividends=True, 
+        #     modules=["summaryProfile", 
+        #     "balanceSheetHistory", 
+        #     "financialData"])
+        data = async_brapi.retrieve(ticker)
         return jsonify(data)
   
 
