@@ -48,9 +48,9 @@ class Brapi:
         #     modules=["summaryProfile", 
         #     "balanceSheetHistory", 
         #     "financialData"])
-            data = async_brapi.quote.retrieve(tickers=ticker)
-            return jsonify(data)
-  
+        data = async_brapi.quote.retrieve(tickers=ticker)
+        return jsonify(data)
+
 
     
         
