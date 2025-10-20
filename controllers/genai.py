@@ -1,7 +1,7 @@
 import os
 import marko
 from flask import jsonify
-import yfinance as yf
+from controllers import Brapi
 import google.generativeai as genai
 from google.generativeai import types
 from datetime import date, timedelta
@@ -54,7 +54,7 @@ class Genai:
         """Creates a candlestick chart and returns it as a base64-encoded string.
 
         Args:
-            timeprices: yf.download... with price time series data.
+            timeprices: Brapi.get_async_stock_data.download... with price time series data.
             cls (str): Class name or identifier for the chart.
 
         Returns:
@@ -104,7 +104,7 @@ class Genai:
         return uri
 
     def market_resume(today=today, lastweek=lastweek, model=model):
-        #timeprices = yf.download("BOVA11.SA SPY")
+        #timeprices = Brapi.get_async_stock_data.download("BOVA11.SA SPY")
         _prompt = f"""You are an economist with brazilian market knowledge, make a resume in brazilian portuguese, using at least three paragraphs, 
         from {lastweek} until {today}, explaining about the brazilian financial market and main news related, make the resume in brazilian portuguese.
         """
@@ -116,8 +116,8 @@ class Genai:
         
 
     def ticker_resume(cls, today=today, lastweek=lastweek, model=model):
-        timeprices = yf.download(cls, start=lastweek, end=today)
-        quote = yf.Ticker(cls)
+        timeprices = Brapi.get_async_stock_data(cls, start=lastweek, end=today)
+        quote = Brapi.get_async_stock_data.Ticker(cls)
         priceresume = timeprices.head(-1)
         
         htmlGraph = Genai.create_candlestick_chart(timeprices, cls)
