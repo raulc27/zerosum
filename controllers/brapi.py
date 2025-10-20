@@ -31,7 +31,7 @@ class Brapi:
         }
         response = requests.get(url, headers=headers, params=params)
         if response.status_code == 200:
-            return jsonify(response.json())
+            return jsonify(response.results[0].json())
         else:
             return jsonify({"error": "Failed to fetch data from Brapi"}), response.status_code
 
@@ -49,7 +49,7 @@ class Brapi:
         #     "balanceSheetHistory", 
         #     "financialData"])
         data = async_brapi.quote.retrieve(tickers=ticker)
-        return jsonify(data)
+        return jsonify(data[0])
 
 
     
