@@ -46,9 +46,10 @@ class Genai:
         }
     ]
 
-    model = genai.GenerativeModel(model_name="gemini-1.0-pro-001",
+    model = genai.GenerativeModel(model_name="gemini-2.5-pro",
                             generation_config=config,
-                            safety_settings=safety_settings)
+                            #safety_settings=safety_settings
+                            )
     
     def create_candlestick_chart(timeprices, cls):
         """Creates a candlestick chart and returns it as a base64-encoded string.
@@ -111,7 +112,7 @@ class Genai:
     
         response = model.generate_content(_prompt)
         return jsonify({
-            "response": marko.convert(response.text)
+            "response": marko.convert(response)
         })
         
 
