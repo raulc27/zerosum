@@ -8,7 +8,7 @@ import json
 load_dotenv()
 BRAPI_TOKEN = os.getenv("BRAPI_TOKEN");
 BASE_URL = "https://brapi.dev/api/quote/";
-params={?token=&range=5d&interval=1d&fundamental=true&dividends=true&modules=summaryProfile,balanceSheetHistory,financialData}
+
 
 class Brapi:
     @staticmethod
