@@ -48,7 +48,7 @@ class Brapi:
         #     "balanceSheetHistory", 
         #     "financialData"])
         data = async_brapi.quote.retrieve(tickers=ticker)
-        return jsonify(data)
+        return data
   
 
     
