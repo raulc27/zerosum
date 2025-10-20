@@ -1,7 +1,7 @@
 import os
 import marko
 from flask import jsonify
-from controllers import Brapi
+from brapi import Brapi
 import google.generativeai as genai
 from google.generativeai import types
 from datetime import date, timedelta
@@ -118,7 +118,7 @@ class Genai:
 
     def ticker_resume(cls, today=today, lastweek=lastweek, model=model):
         timeprices = Brapi.get_async_stock_data(cls, start=lastweek, end=today)
-        quote = Brapi.get_async_stock_data.Ticker(cls)
+        quote = Brapi.get_async_stock_data(cls)
         priceresume = timeprices.head(-1)
         
         htmlGraph = Genai.create_candlestick_chart(timeprices, cls)
