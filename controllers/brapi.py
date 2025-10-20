@@ -36,7 +36,7 @@ class Brapi:
 
     
     @staticmethod
-    def get_async_stock_data(ticker):
+    def async get_async_stock_data(ticker):
         async_brapi = AsyncBrapi(api_key=BRAPI_TOKEN)
         # data = async_brapi.get_quote(
         #     ticker, 
@@ -47,8 +47,8 @@ class Brapi:
         #     modules=["summaryProfile", 
         #     "balanceSheetHistory", 
         #     "financialData"])
-        data = async_brapi.quote.retrieve(tickers=ticker)
-        return data
+        data = await async_brapi.quote.retrieve(tickers=ticker)
+        return jsonify(data)
   
 
     
