@@ -61,11 +61,11 @@ class Brapi:
     @staticmethod
     def get_sync_stock_data(ticker):
         data = sync_brapi.quote.retrieve(tickers=ticker, modules="summaryProfile,balanceSheetHistory")
-        #print(data.results[0])
-        #data = dict(data.results[0])
+
+
         data_result = data.results[0]
         data_result_dict = data_result.dict()
-        print("data: ", data_result_dict)
+        
         return data_result_dict 
     
         
