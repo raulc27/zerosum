@@ -60,7 +60,7 @@ class Brapi:
 
     @staticmethod
     def get_sync_stock_data(ticker):
-        data = sync_brapi.quote.retrieve(tickers=ticker, modules="summaryProfile,balanceSheetHistory")
+        data = sync_brapi.quote.retrieve(tickers=ticker, modules="summaryProfile,balanceSheetHistory,balanceSheetHistoryQuarterly,defaultKeyStatistics,incomeStatementHistoryQuarterly,financialData,valueAddedHistoryQuarterly,cashflowHistoryQuarterly")
 
 
         data_result = data.results[0]
