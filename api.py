@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify, Response, g, render_template
 from flask_cors import CORS, cross_origin
+from dotenv import load_dotenv
+import os
 from controllers import mainprices, genai, brapi
 
+load_dotenv()
+cors_origin = os.getenv('CORS_ORIGIN', '*')
 api = Flask(__name__)
-cors=CORS(api)
+cors=CORS(api, resources={r"/*": {"origins": cors_origin}})
 api.config['CORS_HEADERS'] = 'Content-Type'
 
 @api.route('/')
