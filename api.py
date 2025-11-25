@@ -117,7 +117,7 @@ def brapi_sync_quote_show(name):
 def brapi_sync_quote_list_show():
     result = brapi.Brapi.get_sync_stock_data_list()
     if result:
-        return result, 200
+        return jsonify(result), 200
     return {'message':'not found'}, 404
 
 if __name__ == '__main__':
