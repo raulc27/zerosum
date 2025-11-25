@@ -8,9 +8,9 @@ Just a simple python <b>api</b> for stock basic requests
 
 <p> /genai/resume_market</p>
 <p> /genai/resume_ticker/:TICKER.sa</p>
-<p> /ticker/:TICKER.sa</p>
-<p> /ticker/cashflow/:TICKER.sa</p>
-<p> /ticker/fundamentals/:TICKER.sa</p>
+<p> /brapi/sync_quote_list</p>
+<p> /brapi/async_quote/:TICKER.sa</p>
+<p> /brapi/sync_quote/:TICKER.sa</p>
 
 
 ## Execute it with docker:
