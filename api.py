@@ -114,7 +114,7 @@ def brapi_sync_quote_show(name):
 @api.route('/brapi/sync_quote_list')
 @cross_origin()
 @require_api_key
-def brapi_sync_quote_show():
+def brapi_sync_quote_list_show():
     result = brapi.Brapi.get_sync_stock_data_list()
     if result:
         return result, 200
