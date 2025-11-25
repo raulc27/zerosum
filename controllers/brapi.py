@@ -23,6 +23,8 @@ params = {
     ]
 }
 
+TICKERS_LIST="ITUB4,BBDC4,BBAS3,ITSA4,B3SA3,SANB11,BPAC11,BBSE3,RDOR3,PETR4,VALE3,CMIG4,CPLE3,EQTL3,EGIE3,SBSP3,ENGI11,PRIO3,ABEV3,MGLU3,LREN3,RADL3,ASAI3,PCAR3,HYPE3,NATU3,CVCB3,WEGE3,GGBR4,SUZB3,KLBN11,EMBR3,MRVE3,TOTS3,RENT3,RAIL3"
+
 class Brapi:
     @staticmethod
     def get_stock_data(ticker):
@@ -64,6 +66,16 @@ class Brapi:
 
 
         data_result = data.results[0]
+        data_result_dict = data_result.dict()
+        
+        return data_result_dict 
+
+    
+    @staticmethod
+    def get_sync_stock_data_list(TICKERS_LIST):
+        data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST)
+
+        data_result = data.results
         data_result_dict = data_result.dict()
         
         return data_result_dict 
