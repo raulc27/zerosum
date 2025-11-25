@@ -14,7 +14,7 @@ api.config['CORS_HEADERS'] = 'Content-Type'
 def require_api_key(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        api_key = os.getenv('API_KEY')
+        api_key = os.getenv('CLIENT_API_KEY')
         if not api_key:
              # If no API key is set in env, we might want to allow everything or block everything.
              # Usually block or warn. For now, let's assume if it's not set, we block for security.
@@ -110,5 +110,15 @@ def brapi_sync_quote_show(name):
     if result:
         return result, 200
     return {'message':'not found'}, 404
+
+@api.route('/brapi/sync_quote_list')
+@cross_origin()
+@require_api_key
+def brapi_sync_quote_show():
+    result = brapi.Brapi.get_sync_stock_data_list()
+    if result:
+        return result, 200
+    return {'message':'not found'}, 404
+
 if __name__ == '__main__':
     api.run(port=5000, debug=True)
