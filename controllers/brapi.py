@@ -75,9 +75,8 @@ class Brapi:
     def get_sync_stock_data_list():
         data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST)
 
-        data_result = data.results[0]
-        data_result_dict = data_result.dict()
+        data_results = [result.dict() for result in data.results]
         
-        return data_result_dict 
+        return data_results 
     
         
