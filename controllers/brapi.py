@@ -23,7 +23,7 @@ params = {
     ]
 }
 
-TICKERS_LIST="PETR4,VALE3,CMIG4,MGLU3,BBAS3,B3SA3,BBDC4,ITUB4,WEGE3,EMBR3"
+TICKERS_LIST="PETR4,VALE3,CMIG4,MGLU3,BBAS3,B3SA3,BBDC4,ITUB4,WEGE3,ABEV3"
 
 class Brapi:
     @staticmethod
@@ -73,7 +73,7 @@ class Brapi:
     
     @staticmethod
     def get_sync_stock_data_list():
-        data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST)
+        data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST, sortBy='volume', sortOrder='desc')
 
         data_results = [result.dict() for result in data.results]
         
