@@ -73,7 +73,7 @@ class Brapi:
     
     @staticmethod
     def get_sync_stock_data_list():
-        data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST, sortBy='volume', sortOrder='desc')
+        data = sync_brapi.quote.retrieve(tickers=TICKERS_LIST)
 
         data_results = [result.dict() for result in data.results]
         
