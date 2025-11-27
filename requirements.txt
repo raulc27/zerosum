@@ -1,11 +1,11 @@
 Flask
 Flask-Cors
 python-dotenv
-pandas
-yfinance
 marko
 brapi
 google-generativeai
 plotly
 requests
 gunicorn
+gevent
+werkzeug

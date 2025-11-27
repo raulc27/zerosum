@@ -31,8 +31,14 @@ def require_api_key(f):
 @require_api_key
 def get_generic():
     return {
-        '/genai/resume_market':'Resume market',
-        '/genai/resume_ticker/TICKER.sa':'Basic info about TICKSER.sa',
+        '/genai/resume_market': 'Resume market',
+        '/genai/resume_ticker/TICKER': 'Resume for specific ticker',
+        '/brapi/quote/TICKER': 'Get stock quote data',
+        '/brapi/async_quote/TICKER': 'Get stock quote data (async)',
+        '/brapi/sync_quote/TICKER': 'Get stock quote data with modules',
+        '/brapi/sync_quote_list': 'Get list of predefined stocks',
+        '/brapi/sync_quote_by_sector/SECTOR': 'Get stocks by sector (top 10 by volume)',
+        '/brapi/sync_quote_list_sectors': 'Get available sectors list',
     }, 200
 
 
