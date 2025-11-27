@@ -78,5 +78,23 @@ class Brapi:
         data_results = [result.dict() for result in data.results]
         
         return data_results 
-    
+
+    @staticmethod
+    def get_available_sectors_list():
+        data = sync_brapi.quote.list(sector="utilities", sort_by="volume", sort_order="desc", limit=10)
         
+        # Convert response to dict and extract sectors array
+        payload = data.dict() if hasattr(data, 'dict') else data
+        sectors_array = payload.get("availableSectors", [])
+    
+        return sectors_array
+
+    @staticmethod
+    def get_sync_stock_data_list_by_sector(sector):
+        data = sync_brapi.quote.list(sector=sector, sort_by="volume", sort_order="desc", limit=10)
+        
+        # Convert response to dict and extract stocks array
+        payload = data.dict() if hasattr(data, 'dict') else data
+        stocks_array = payload.get("stocks", [])
+    
+        return stocks_array

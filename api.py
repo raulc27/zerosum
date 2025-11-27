@@ -31,39 +31,9 @@ def require_api_key(f):
 @require_api_key
 def get_generic():
     return {
-        '/ticker/fundamentals/TICKER.sa':'Fundamentals (quarterly)',
-        '/ticker/cashflow/TICKER.sa':'Cashflow (quarterly)',
-        '/ticker/TICKER.sa':'Basic info about TICKSER.sa',
         '/genai/resume_market':'Resume market',
         '/genai/resume_ticker/TICKER.sa':'Basic info about TICKSER.sa',
     }, 200
-
-@api.route('/ticker/<string:name>')
-@cross_origin()
-@require_api_key
-def get_show(name):
-    result = mainprices.ShowMarket.show_ticker(name)
-    if result:
-        return result, 200
-    return {'message':'not found'}, 404
-
-@api.route('/ticker/fundamentals/<string:name>')
-@cross_origin()
-@require_api_key
-def get_fundamentals_show(name):
-    result = mainprices.ShowMarket.fundamentals_ticker(name)
-    if result:
-        return result, 200
-    return {'message':'not found'}, 404
-
-@api.route('/ticker/cashflow/<string:name>')
-@cross_origin()
-@require_api_key
-def get_cashflow_show(name):
-    result = mainprices.ShowMarket.cashflow_ticker(name)
-    if result:
-        return result, 200
-    return {'message':'not found'}, 404
 
 
 @api.route('/genai/resume_market')
@@ -119,6 +89,26 @@ def brapi_sync_quote_list_show():
     if result:
         return jsonify(result), 200
     return {'message':'not found'}, 404
+
+@api.route('/brapi/sync_quote_by_sector/<string:sector>')
+@cross_origin()
+@require_api_key
+def brapi_sync_quote_by_sector_show(sector):
+    result = brapi.Brapi.get_sync_stock_data_list_by_sector(sector)
+    if result:
+        return jsonify(result), 200
+    return {'message':'not found'}, 404
+
+
+@api.route('/brapi/sync_quote_list_sectors')
+@cross_origin()
+@require_api_key
+def brapi_sync_quote_list_sectors_show():
+    result = brapi.Brapi.get_available_sectors_list()
+    if result:
+        return jsonify(result), 200
+    return {'message':'not found'}, 404
+
 
 if __name__ == '__main__':
     api.run(port=5000, debug=True)
