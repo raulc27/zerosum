@@ -31,9 +31,9 @@ kaleido==0.2.1
 marko==2.0.3
 MarkupSafe==2.0.1
 multitasking==0.0.10
-numpy
+numpy==1.26.4
 packaging==24.0
-pandas
+pandas==2.2.2
 peewee==3.17.5
 plotly==5.22.0
 proto-plus==1.23.0
@@ -58,21 +58,8 @@ uritemplate==4.1.1
 urllib3==1.26.8
 webencodings==0.5.1
 Werkzeug==2.0.2
-yfinance
+yfinance==0.2.37
 zipp==3.7.0
 zope.event==5.0
 zope.interface==6.4.post2
 brapi==1.0.0
-# Flask
-# Flask-Cors
-# python-dotenv
-# marko
-# brapi
-# google-generativeai
-# plotly
-# requests
-# gunicorn
-# gevent
-# werkzeug
-# grpcio
-# grpcio-status
