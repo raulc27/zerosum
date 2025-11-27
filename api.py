@@ -3,7 +3,7 @@ from functools import wraps
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 import os
-from controllers import mainprices, genai, brapi
+from controllers import genai, brapi
 
 load_dotenv()
 cors_origin = os.getenv('CORS_ORIGIN', '*')
