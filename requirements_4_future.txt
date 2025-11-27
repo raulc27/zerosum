@@ -1,0 +1,13 @@
+# Flask
+# Flask-Cors
+# python-dotenv
+# marko
+# brapi
+# google-generativeai
+# plotly
+# requests
+# gunicorn
+# gevent
+# werkzeug
+# grpcio
+# grpcio-status
