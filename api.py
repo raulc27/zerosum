@@ -15,11 +15,19 @@ api.config['CORS_HEADERS'] = 'Content-Type'
 # Cache Configuration
 is_prod = os.getenv('FLASK_ENV') == 'production'
 if is_prod:
+    redis_user = os.getenv('REDIS_USER') or os.getenv('READIS_USER')
+    redis_password = os.getenv('REDIS_PASSWORD')
+    redis_host = os.getenv('REDIS_HOST')
+    redis_port = os.getenv('REDIS_PORT')
+
+    if redis_user:
+        redis_url = f"redis://{redis_user}:{redis_password}@{redis_host}:{redis_port}"
+    else:
+        redis_url = f"redis://:{redis_password}@{redis_host}:{redis_port}"
+
     cache_config = {
         'CACHE_TYPE': 'RedisCache',
-        'CACHE_REDIS_HOST': os.getenv('REDIS_HOST'),
-        'CACHE_REDIS_PORT': os.getenv('REDIS_PORT'),
-        'CACHE_REDIS_PASSWORD': os.getenv('REDIS_PASSWORD')
+        'CACHE_REDIS_URL': redis_url
     }
 else:
     cache_config = {
