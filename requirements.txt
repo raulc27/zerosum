@@ -63,3 +63,5 @@ zipp==3.7.0
 zope.event==5.0
 zope.interface==6.4.post2
 brapi==1.0.0
+Flask-Caching==2.3.0
+redis==5.0.1

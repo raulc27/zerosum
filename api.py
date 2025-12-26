@@ -4,12 +4,30 @@ from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 import os
 from controllers import genai, brapi
+from flask_caching import Cache
 
 load_dotenv()
 cors_origin = os.getenv('CORS_ORIGIN', '*')
 api = Flask(__name__)
 cors=CORS(api, resources={r"/*": {"origins": cors_origin}})
 api.config['CORS_HEADERS'] = 'Content-Type'
+
+# Cache Configuration
+is_prod = os.getenv('FLASK_ENV') == 'production'
+if is_prod:
+    cache_config = {
+        'CACHE_TYPE': 'RedisCache',
+        'CACHE_REDIS_HOST': os.getenv('REDIS_HOST'),
+        'CACHE_REDIS_PORT': os.getenv('REDIS_PORT'),
+        'CACHE_REDIS_PASSWORD': os.getenv('REDIS_PASSWORD')
+    }
+else:
+    cache_config = {
+        'CACHE_TYPE': 'NullCache'
+    }
+
+api.config.from_mapping(cache_config)
+cache = Cache(api)
 
 def require_api_key(f):
     @wraps(f)
@@ -63,6 +81,7 @@ def ticket_resume_show(name):
 @api.route('/brapi/quote/<string:name>')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 def brapi_quote_show(name):
     result = brapi.Brapi.get_stock_data(name)
     if result:
@@ -72,6 +91,7 @@ def brapi_quote_show(name):
 @api.route('/brapi/async_quote/<string:name>')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 async def brapi_async_quote_show(name):
     result = await brapi.Brapi.get_async_stock_data(name)
     if result:
@@ -81,6 +101,7 @@ async def brapi_async_quote_show(name):
 @api.route('/brapi/sync_quote/<string:name>')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 def brapi_sync_quote_show(name):
     result = brapi.Brapi.get_sync_stock_data(name)
     if result:
@@ -90,6 +111,7 @@ def brapi_sync_quote_show(name):
 @api.route('/brapi/sync_quote_list')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 def brapi_sync_quote_list_show():
     result = brapi.Brapi.get_sync_stock_data_list()
     if result:
@@ -99,6 +121,7 @@ def brapi_sync_quote_list_show():
 @api.route('/brapi/sync_quote_by_sector/<string:sector>')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 def brapi_sync_quote_by_sector_show(sector):
     result = brapi.Brapi.get_sync_stock_data_list_by_sector(sector)
     if result:
@@ -109,6 +132,7 @@ def brapi_sync_quote_by_sector_show(sector):
 @api.route('/brapi/sync_quote_list_sectors')
 @cross_origin()
 @require_api_key
+@cache.cached(timeout=300)
 def brapi_sync_quote_list_sectors_show():
     result = brapi.Brapi.get_available_sectors_list()
     if result:
