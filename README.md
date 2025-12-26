@@ -33,6 +33,7 @@ To run this project, you will need to add the following environment variables to
 | `FLASK_ENV` | Environment mode (`production` enables Redis) | No | `development` |
 | `REDIS_HOST` | Redis Hostname (Required if Prod) | No | - |
 | `REDIS_PORT` | Redis Port (Required if Prod) | No | - |
+| `REDIS_USER` | Redis Username (Optional) | No | - |
 | `REDIS_PASSWORD` | Redis Password (Required if Prod) | No | - |
 
 ### Caching
@@ -53,7 +54,9 @@ CORS_ORIGIN=http://localhost:3000
 # Redis (Production only)
 FLASK_ENV=production
 REDIS_HOST=mx.redis-server.com
+REDIS_HOST=mx.redis-server.com
 REDIS_PORT=6379
+REDIS_USER=default
 REDIS_PASSWORD=secret
 ```
 
