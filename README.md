@@ -30,6 +30,15 @@ To run this project, you will need to add the following environment variables to
 | `BRAPI_TOKEN` | Token for accessing Brapi.dev API | Yes | - |
 | `CLIENT_API_KEY` | Secret key to authenticate clients accessing this API | Yes | - |
 | `CORS_ORIGIN` | Allowed origin for CORS | No | `*` |
+| `FLASK_ENV` | Environment mode (`production` enables Redis) | No | `development` |
+| `REDIS_HOST` | Redis Hostname (Required if Prod) | No | - |
+| `REDIS_PORT` | Redis Port (Required if Prod) | No | - |
+| `REDIS_PASSWORD` | Redis Password (Required if Prod) | No | - |
+
+### Caching
+
+This application uses **Redis** for caching in **production** environments (`FLASK_ENV=production`).
+In **development** mode (default), caching is disabled (`NullCache`) to facilitate debugging.
 
 ### Setting up variables
 
@@ -40,6 +49,12 @@ GENAI_API_KEY=your_genai_key
 BRAPI_TOKEN=your_brapi_token
 CLIENT_API_KEY=your_client_secret_key
 CORS_ORIGIN=http://localhost:3000
+
+# Redis (Production only)
+FLASK_ENV=production
+REDIS_HOST=mx.redis-server.com
+REDIS_PORT=6379
+REDIS_PASSWORD=secret
 ```
 
 Or export them in your terminal:
